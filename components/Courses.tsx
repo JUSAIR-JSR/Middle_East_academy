@@ -1,5 +1,5 @@
 import Card from "./Card";
-import { courses } from "../data/courses"; // Import courses array
+import { courses } from "../app/data/courses"; // Import courses array
 import Link from "next/link";
 
 const Courses: React.FC = () => {

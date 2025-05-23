@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Course } from "../data/courses"; // Import Course type
+import { Course } from "../app/data/courses"; // Import Course type
 
 type CardProps = {
   course: Course;
