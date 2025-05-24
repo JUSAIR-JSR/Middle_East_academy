@@ -1,11 +1,10 @@
 "use client";
 import { Link } from "react-scroll";
-
 import Image from "next/image";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 
-interface Particle {
+interface ParticleInterface {
   x: number;
   y: number;
   size: number;
@@ -18,7 +17,6 @@ interface Particle {
 
 const Hero = () => {
   useEffect(() => {
-    // Particle animation script
     const canvas = document.getElementById("particle-canvas") as HTMLCanvasElement | null;
     if (!canvas) return;
 
@@ -32,10 +30,13 @@ const Hero = () => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const particles: Particle[] = [];
+    const width = canvas.width;
+    const height = canvas.height;
+
+    const particles: ParticleInterface[] = [];
     const particleCount = window.innerWidth < 768 ? 30 : 60;
 
-    class Particle {
+    class Particle implements ParticleInterface {
       x: number;
       y: number;
       size: number;
@@ -44,8 +45,8 @@ const Hero = () => {
       color: string;
 
       constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
         this.size = Math.random() * 3 + 1;
         this.speedX = Math.random() * 1 - 0.5;
         this.speedY = Math.random() * 1 - 0.5;
@@ -56,12 +57,11 @@ const Hero = () => {
         this.x += this.speedX;
         this.y += this.speedY;
 
-        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+        if (this.x < 0 || this.x > width) this.speedX *= -1;
+        if (this.y < 0 || this.y > height) this.speedY *= -1;
       }
 
       draw() {
-        if (!ctx) return;
         ctx.fillStyle = this.color;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
@@ -76,8 +76,7 @@ const Hero = () => {
     let animationFrameId: number;
 
     const animateParticles = () => {
-      if (!ctx) return;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, width, height);
       particles.forEach(particle => {
         particle.update();
         particle.draw();
@@ -107,7 +106,7 @@ const Hero = () => {
       />
 
       <div className="container mx-auto px-4 sm:px-6 pt-16 pb-8 lg:pt-24 lg:pb-12 z-10">
-        {/* Text Content - Top Section */}
+        {/* Text Content */}
         <motion.div
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
@@ -133,22 +132,22 @@ const Hero = () => {
             whileTap={{ scale: 0.95 }}
             className="flex justify-center"
           >
-               <Link
-    to="courses" // This must match the section ID
-    spy={true}
-    smooth={true}
-    offset={-80}
-    duration={500}
-    className="px-6 sm:px-8 py-2 sm:py-3 rounded-full bg-gradient-to-r from-red-600 to-red-500 text-white font-medium shadow-lg hover:shadow-red-500/30 transition-all duration-300 hover:brightness-110 cursor-pointer"
-  >
-            <button className="px-6 sm:px-8 py-2 sm:py-3 rounded-full bg-gradient-to-r from-red-600 to-red-500 text-white font-medium shadow-lg hover:shadow-red-500/30 transition-all duration-300 hover:brightness-110">
-              Explore Courses
-            </button>
+            <Link
+              to="courses"
+              spy={true}
+              smooth={true}
+              offset={-80}
+              duration={500}
+              className="cursor-pointer"
+            >
+              <button className="px-6 sm:px-8 py-2 sm:py-3 rounded-full bg-gradient-to-r from-red-600 to-red-500 text-white font-medium shadow-lg hover:shadow-red-500/30 transition-all duration-300 hover:brightness-110">
+                Explore Courses
+              </button>
             </Link>
           </motion.div>
         </motion.div>
 
-        {/* Images - Bottom Section in Straight Line */}
+        {/* Image Section */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -156,7 +155,6 @@ const Hero = () => {
           className="w-full mt-12"
         >
           <div className="flex justify-center items-center gap-6 sm:gap-10 lg:gap-16">
-            {/* Study Image */}
             <div className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 relative">
               <Image
                 src="/images/study01.webp"
@@ -166,8 +164,6 @@ const Hero = () => {
                 priority
               />
             </div>
-
-            {/* Academy Image */}
             <div className="w-36 h-36 sm:w-44 sm:h-44 lg:w-52 lg:h-52 relative z-10">
               <Image
                 src="/images/MEA_ADDVER.jpeg"
@@ -177,8 +173,6 @@ const Hero = () => {
                 priority
               />
             </div>
-
-            {/* Interview Image */}
             <div className="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 relative">
               <Image
                 src="/images/interview_person.webp"
