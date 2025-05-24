@@ -25,9 +25,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
-  <link rel="icon" href="/MEA.svg" sizes="32x32" />
-  <link rel="icon" type="image/png" href="/MEA.svg" sizes="512x512" />
-  <link rel="apple-touch-icon" href="/MEA.svg" />
+  <link rel="icon" href="/images/MEA CIRCLE LOGO.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/images/MEA CIRCLE LOGO.png" sizes="512x512" />
+  <link rel="apple-touch-icon" href="/images/MEA CIRCLE LOGO.png" />
 </head>
 
       <body>{children}</body>
